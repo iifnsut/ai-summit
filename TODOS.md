@@ -1,0 +1,2 @@
+- [ ] Add Social Links in footer
+- [ ] Update addresses and phone number in footer

@@ -1,101 +1,141 @@
+"use client";
+import Dots from "@/components/background/dots";
+import Header, { tab } from "@/components/header/header";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "motion/react";
+import Box from "@/components/Box/box";
+import { useRef, useState } from "react";
+import Heading from "@/components/heading/heading";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import Footer from "@/components/footer/footer";
+import colors from "tailwindcss/colors";
+import RegisterButton from "@/components/buttons/registerButton";
+import EventRegisterButton from "@/components/buttons/eventRegisterButton";
+import { ChevronRight, Dot } from "lucide-react";
+import Timeline from "@/components/timeline/timeline";
 
 export default function Home() {
+  const homeRef = useRef(null);
+  const homeScroll = useScroll({
+    target: homeRef,
+    offset: ["end start", "start start"],
+  });
+  const aboutGradient = [
+    `conic-gradient(from 0deg, ${colors.blue[500]}, ${colors.violet[800]}, ${colors.fuchsia[500]}, ${colors.blue[500]})`,
+    `conic-gradient(from 360deg, ${colors.blue[500]}, ${colors.violet[800]}, ${colors.fuchsia[500]}, ${colors.blue[500]})`,
+  ];
+  const headerBackground = useTransform(
+    homeScroll.scrollYProgress,
+    [0, 1],
+    ["hsla(var(--background) / 0.7)", "hsla(var(--background) / 0)"]
+  );
+  const timelineData = [
+    { icon: Dot, date: "19th FEB 2023", desc: "Summit inauguration and Innovate4Humanity hackathon launch at NSUT" },
+    {
+      icon: Dot,
+      date: "19th FEB - 6th MARCH 2025",
+      desc: "Preliminary round of Innovate4Humanity: Participants must submit team details along with their ideation or prototype.",
+    },
+    { icon: Dot, date: "3rd WEEK OF MARCH 2025", desc: "Preliminary Round result of Innovate4Humanity" },
+    {
+      icon: Dot,
+      date: "3rd WEEK OF MARCH 2025",
+      desc: "Final Round of Innovate4Humanity, Speaker Sessions, events & closing of this Summit",
+    },
+  ];
+  const headerBorder = useTransform(homeScroll.scrollYProgress, [0, 1], ["hsla(var(--border) / 1)", "hsla(var(--border) / 0)"]);
+  const headerBgBlur = useTransform(homeScroll.scrollYProgress, [0, 1], ["blur(var(4px))", "blur(0px)"]);
+  const [tabs, setTabs] = useState<tab[]>([
+    { title: "Home", href: "#home", active: true },
+    { title: "About Us", href: "#about" },
+    { title: "Events", href: "#events" },
+    { title: "Timeline", href: "#timeline" },
+    { title: "FAQs", href: "#FAQs" },
+  ]);
+  const FAQs = [
+    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+  ];
+  const updateTabs = (e: IntersectionObserverEntry | null) => {
+    setTabs(tabs.map((tab) => ({ ...tab, active: `#${e?.target.id}` === tab.href })));
+  };
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+    <>
+      <Header
+        tabs={tabs}
+        className={`border-b`}
+        style={{
+          backdropFilter: headerBgBlur,
+          backgroundColor: headerBackground,
+          borderColor: headerBorder,
+        }}
+      />
+      <Dots className="fixed top-0 -z-10" />
+      <Box onViewportEnter={updateTabs} id="home" className="h-screen w-full flex justify-center items-center text-foreground">
+        <motion.div
+          ref={homeRef}
+          initial={{ opacity: 0 }}
+          style={{ opacity: homeScroll.scrollYProgress }}
+          transition={{ duration: 2, delay: 1, ease: "easeInOut" }}
+          viewport={{ amount: "all", margin: "0px" }}
+          className="animate-growIn delay-1000 fill-mode-both flex flex-col items-center justify-center w-full md:w-2/3">
+          <Image src={"/images/logo.png"} alt="logo" width={1000} height={250} className="w-auto md:w-full" />
+          <div className="flex flex-row w-full md:w-1/2 px-6 gap-4 justify-center">
+            <EventRegisterButton className="rounded-full flex-1 w-full">
+              Hackathon <ChevronRight />
+            </EventRegisterButton>
+            <RegisterButton variant={"secondary"} className="rounded-full flex-1 w-full" />
+          </div>
+        </motion.div>
+      </Box>
+      <Box
+        onViewportEnter={updateTabs}
+        id="about"
+        className="w-full h-screen flex flex-col gap-4 items-center justify-center bg-gradient-to-b from-background/0 via-background/100 to-background">
+        <Heading>ABOUT US</Heading>
+        <motion.div
+          whileHover={{ scale: 1.01 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="w-4/5 md:w-1/2 text-base md:text-2xl text-center rounded-lg relative">
+          <motion.div
+            className="absolute rounded-3xl opacity-75 blur"
+            animate={{ background: aboutGradient, transition: { duration: 4, repeat: Infinity, ease: "linear" } }}
+            style={{ inset: "-0.25rem" }}
+            whileHover={{ inset: "-0.5rem" }}
+            transition={{ inset: { duration: 0.4, ease: "easeInOut" } }}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <div className="bg-background relative p-6 md:p-16 rounded-3xl pointer-events-none">
+            Step into the Delhi AI4Humanity Summit 2025, where NSUT IIF and the Embassy of Israel bring together innovators, thinkers, and
+            changemakers to harness AI for a better world. Over a month of hackathons, competitions, and inspiring talks, explore how AI is
+            revolutionizing healthcare, agriculture, and communities, creating a future that empowers all.
+          </div>
+        </motion.div>
+      </Box>
+      <Box onViewportEnter={updateTabs} id="events" className="w-full h-screen flex items-center justify-center bg-background">
+        <Heading>EVENTS</Heading>
+        <div className="flex"></div>
+      </Box>
+      <Box onViewportEnter={updateTabs} id="timeline" className="w-full h-screen flex flex-col items-center justify-center bg-background">
+        <Heading>TIMELINE</Heading>
+        <Timeline timelineData={timelineData} />
+      </Box>
+      <Box onViewportEnter={updateTabs} id="FAQs" className="w-full gap-8 h-screen flex flex-col items-center justify-center bg-background">
+        <Heading>FAQs</Heading>
+        <Accordion type="single" collapsible className="w-4/5 md:w-3/5">
+          {FAQs.map((FAQ, index) => (
+            <AccordionItem value={`${index}`} key={index} className="px-4">
+              <AccordionTrigger className="md:text-lg py-8">
+                <h2>{FAQ.Q}</h2>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">{FAQ.A}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </Box>
+      <Footer />
+    </>
   );
 }
