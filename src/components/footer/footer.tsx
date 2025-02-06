@@ -4,7 +4,7 @@ import Image from "next/image";
 import { HTMLAttributes } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Separator } from "../ui/separator";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 export default function Footer(props: HTMLAttributes<HTMLElement>) {
   const socials = [
@@ -18,22 +18,16 @@ export default function Footer(props: HTMLAttributes<HTMLElement>) {
     <footer {...props} className={cn("border-t bg-background border-border p-4 text-sm text-muted-foreground", props?.className)}>
       <div className="flex-col md:flex-row flex justify-between gap-6 md:gap-16 rounded-lg bg-gradient-to-tr from-zinc-900 from-50% to-zinc-800 p-8">
         <div className="flex flex-col md:w-1/2 gap-2">
-          <div className="flex h-14 gap-2 w-full ">
-            <Image
-              src={"/images/iifLogo.jpg"}
-              alt={"NSUT IIF LOGO"}
-              height={640}
-              width={640}
-              className="h-full p-1 min-w-0 w-auto object-contain"
-            />
-            <Separator orientation="vertical" />
-            <Image
-              src={"/images/embassyLogo.png"}
-              alt={"Embassy of Israel in India Logo"}
-              width={413}
-              height={107}
-              className="min-w-0 p-1 w-auto object-contain"
-            />
+          <div className="flex gap-2 w-full ">
+            <AspectRatio ratio={8710 / 821}>
+              <Image
+                src={"/images/logoHorizontal.png"}
+                alt={"Embassy of Israel in India Logo"}
+                width={8710}
+                height={821}
+                className="min-w-0 p-1 w-auto object-contain"
+              />
+            </AspectRatio>
           </div>
           <p>AI isn&apos;t just about technology; it&apos;s about transforming lives!</p>
           <div className="flex-1"></div>

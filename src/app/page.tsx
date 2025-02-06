@@ -82,7 +82,7 @@ export default function Home() {
           transition={{ duration: 2, delay: 1, ease: "easeInOut" }}
           viewport={{ amount: "all", margin: "0px" }}
           className="animate-growIn delay-1000 fill-mode-both flex flex-col items-center justify-center w-full md:w-2/3">
-          <Image src={"/images/logo.png"} alt="logo" width={1000} height={250} className="w-auto md:w-full" />
+          <Image src={"/images/logo.png"} alt="logo" width={1920} height={720} className="w-auto md:w-full" />
           <div className="flex flex-row w-full md:w-1/2 px-6 gap-4 justify-center">
             <EventRegisterButton className="rounded-full flex-1 w-full">
               Hackathon <ChevronRight />
@@ -107,7 +107,7 @@ export default function Home() {
             whileHover={{ inset: "-0.5rem" }}
             transition={{ inset: { duration: 0.4, ease: "easeInOut" } }}
           />
-          <div className="bg-background relative p-6 md:p-16 rounded-3xl pointer-events-none">
+          <div className="bg-background relative p-6 md:p-16 rounded-3xl pointer-events-none text-justify">
             Step into the Delhi AI4Humanity Summit 2025, where NSUT IIF and the Embassy of Israel bring together innovators, thinkers, and
             changemakers to harness AI for a better world. Over a month of hackathons, competitions, and inspiring talks, explore how AI is
             revolutionizing healthcare, agriculture, and communities, creating a future that empowers all.

@@ -25,7 +25,7 @@ export default function Header(allProps: props) {
     <motion.header
       {...props}
       className={cn("w-full h-20 z-20 flex justify-between items-center py-4 px-6 fixed top-0 animate-slideDown", props?.className)}>
-      <Image src="/images/logo.png" alt="logo" width={1000} height={250} className="h-full object-contain w-min" />
+      <Image src="/images/logoHeader.png" alt="logo" width={3547} height={821} className="h-full object-contain w-min" />
       <NavMenu tabs={tabs} className="hidden md:flex" />
       <RegisterButton className="hidden md:inline-flex" />
       <Sheet>

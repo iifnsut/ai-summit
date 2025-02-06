@@ -79,7 +79,7 @@ function TimelineItem({ item }: { item: timelineItem }) {
         />
         <item.icon className="bg-primary text-primary-foreground rounded-full p-1 w-6 h-6 stroke-[8px] z-10" strokeWidth={8} />
       </div>
-      <div className="flex flex-col md:flex-row md:items-center gap-4">
+      <div className="flex flex-col gap-4">
         <h2 className="font-montserrat font-bold text-3xl">{item.date}</h2>
         <p className="text-muted-foreground">{item.desc}</p>
       </div>
