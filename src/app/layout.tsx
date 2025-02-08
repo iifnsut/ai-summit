@@ -6,7 +6,7 @@ import { Montserrat, Poppins } from "next/font/google";
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", variable: "--font-poppins", subsets: ["latin"] });
 import {ClerkProvider } from '@clerk/nextjs'
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Create Next App",
