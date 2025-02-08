@@ -77,7 +77,7 @@ const EventResigtrationModal = () => {
   }, [isSignedIn]);
 
   return (
-    <Dialog>
+    <Dialog modal={false}>
       <DialogTrigger asChild>
         <RegisterButton
           variant={"secondary"}
