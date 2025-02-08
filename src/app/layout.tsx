@@ -5,6 +5,8 @@ import { Montserrat, Poppins } from "next/font/google";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", variable: "--font-poppins", subsets: ["latin"] });
+import {ClerkProvider } from '@clerk/nextjs'
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +22,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.variable} ${poppins.variable} font-poppins antialiased scroll-smooth`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <ClerkProvider>
           {children}
+          <Toaster />
+          </ClerkProvider>
         </ThemeProvider>
       </body>
     </html>
