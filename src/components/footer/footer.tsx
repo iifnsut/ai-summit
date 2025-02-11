@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Facebook, Twitter, Linkedin, Youtube, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Youtube, Instagram, Globe ,Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import { Button } from "../ui/button";
@@ -8,11 +8,12 @@ import { AspectRatio } from "../ui/aspect-ratio";
 
 export default function Footer(props: HTMLAttributes<HTMLElement>) {
   const socials = [
-    { href: "", icon: Facebook },
-    { href: "", icon: Twitter },
-    { href: "", icon: Linkedin },
-    { href: "", icon: Youtube },
-    { href: "", icon: Instagram },
+    { href: "https://nsutiif.in/", icon: Globe },
+    { href: "https://www.facebook.com/IIFNSUT", icon: Facebook },
+    { href: "https://x.com/iifnsut?lang=en", icon: Twitter },
+    { href: "https://www.linkedin.com/company/nsutiif/", icon: Linkedin },
+    { href: "https://www.youtube.com/@iifnsut", icon: Youtube },
+    { href: "https://www.instagram.com/iifnsut/", icon: Instagram },
   ];
   return (
     <footer {...props} className={cn("border-t bg-background border-border p-4 text-sm text-muted-foreground", props?.className)}>
@@ -53,15 +54,15 @@ export default function Footer(props: HTMLAttributes<HTMLElement>) {
 
           <span>
             <Phone className="inline" />
-            <a href="tel:+918700528997"> +91 8700528997</a>
-          </span>
-          <span>
-            <Mail className="inline" />
-            <a href="mailto:support.nsutiif@nsut.ac.in"> support.nsutiif@nsut.ac.in</a>
+            <a href="tel:+917838850636"> +91 7838850636</a>
           </span>
           <span>
             <Mail className="inline" />
             <a href="mailto:connect.nsutiif@nsut.ac.in"> connect.nsutiif@nsut.ac.in</a>
+          </span>
+          <span>
+            <Mail className="inline" />
+            <a href="mailto:support.nsutiif@nsut.ac.in"> support.nsutiif@nsut.ac.in</a>
           </span>
           <span>
             <Mail className="inline" />
