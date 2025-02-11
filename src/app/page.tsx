@@ -75,11 +75,10 @@ export default function Home() {
     { title: "FAQs", href: "#FAQs" },
   ]);
   const FAQs = [
-    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
-    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
-    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
-    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
-    { Q: "Lorem ipsum dolor sit amet.", A: "Lorem ipsum dolor sit amet." },
+    { Q: "1. What is the AI Summit, and what is its main objective?", A: "The AI Summit is a premier event focused on advancements in AI and its real-world applications." },
+    { Q: "2. What is the theme of the AI Summit?", A: "Exploring AI innovations and their impact across industries and healthcare." },
+    { Q: "3. When and where is the AI Summit going to be held?", A: "It is going to be a month long summit to be held at NSUT from 19th February,2025" },
+    { Q: "4.What topics will be covered in the AI Summit sessions?", A: "AI ethics, ML, deep learning, NLP, AI in healthcare, and more." },
   ];
   const updateTabs = (e: IntersectionObserverEntry | null) => {
     setTabs(
