@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface IHackathon extends Document {
-  googleId: string;
-  googleEmail: string;
+  // googleId: string;
+  // googleEmail: string;
   teamName: string;
   teamLeaderName: string;
   teamLeaderMobile: string;
@@ -24,19 +24,19 @@ interface IHackathon extends Document {
 
 const hackathonSchema = new Schema<IHackathon>(
   {
-    googleId: {
-      type: String,
-      required: true,
-      unique: true,
-      index: true,
-    },
-    googleEmail: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      index: true,
-    },
+    // googleId: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    //   index: true,
+    // },
+    // googleEmail: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    //   trim: true,
+    //   index: true,
+    // },
     teamName: {
       type: String,
       required: true,

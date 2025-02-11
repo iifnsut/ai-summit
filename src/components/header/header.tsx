@@ -40,7 +40,7 @@ export default function Header(allProps: props) {
       />
       <NavMenu tabs={tabs} className="hidden md:flex" />
       <div className="hidden md:inline-flex">
-        <SignedOut>
+        {/* <SignedOut>
           <SignInButton>
             <RegisterButton className="">
               Register <ChevronRight />
@@ -49,7 +49,10 @@ export default function Header(allProps: props) {
         </SignedOut>
         <SignedIn>
           <UserButton />
-        </SignedIn>
+        </SignedIn> */}
+         <RegisterButton className="">
+         Register <ChevronRight />
+         </RegisterButton>
       </div>
       <div className="flex justify-end items-center w-full md:hidden gap-4">
         <SignedIn>

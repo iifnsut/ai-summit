@@ -1,40 +1,49 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { Form } from "@/components/ui/form";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useState } from "react";
+import { useForm, useFormState } from "react-hook-form";
 import RegisterButton from "../buttons/registerButton";
-import { Loading, LoginMessage } from "../Hackathon/Steps";
-import { isAlreadyRegistered, registerEvent } from "./action";
+import { registerEvent } from "./action";
 import { formSchema } from "./formSchem";
 import { EventFormStep, RegisterMessage } from "./Steps";
+import { RegistrationClosed, CountDown } from "../Hackathon/Steps";
+import {
+  EVENT_REGISTRATION_START_DATE,
+  EVENT_REGISTRATION_END_DATE,
+} from "@/lib/constants";
 
 const EventResigtrationModal = () => {
   const { toast } = useToast();
-  const { isSignedIn, isLoaded } = useUser();
-  const [primaryStep, setPrimaryStep] = useState(0);
+  // const { isSignedIn, isLoaded } = useUser();
+  const [primaryStep, setPrimaryStep] = useState(
+    EVENT_REGISTRATION_START_DATE > new Date()
+      ? 0
+      : EVENT_REGISTRATION_END_DATE < new Date()
+      ? 3
+      : 1
+  );
 
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
 
   const handelFormSubmit = useCallback(
-    async (data:any) => {
+    async (data: any) => {
       try {
         const res = await registerEvent({ data });
         if (res.success) {
@@ -42,7 +51,7 @@ const EventResigtrationModal = () => {
             title: "Registration Successful",
             description: "You have successfully registered for the event",
           });
-          setPrimaryStep(1);
+          setPrimaryStep(2);
         } else {
           toast({
             title: "Oops! Something went wrong",
@@ -51,8 +60,8 @@ const EventResigtrationModal = () => {
           });
         }
       } catch (error) {
-        if(process.env.NODE_ENV === "development") {
-            console.log(error);
+        if (process.env.NODE_ENV === "development") {
+          console.log(error);
         }
         toast({
           title: "Oops! Something went wrong",
@@ -64,20 +73,17 @@ const EventResigtrationModal = () => {
     [toast]
   );
 
-  useEffect(() => {
-    if (isSignedIn) {
-      isAlreadyRegistered().then((res) => {
-        if (res.success) {
-          setPrimaryStep(1);
-        } else {
-          setPrimaryStep(0);
-        }
-      });
+  const handelClose = useCallback(() => {
+    if (primaryStep === 2) {
+      setPrimaryStep(1);
+      form.reset();
     }
-  }, [isSignedIn]);
+  }, [primaryStep, form]);
+
+  const { isSubmitting: pending } = useFormState({ control: form.control });
 
   return (
-    <Dialog modal={false}>
+    <Dialog modal={false} onOpenChange={handelClose}>
       <DialogTrigger asChild>
         <RegisterButton
           variant={"secondary"}
@@ -90,28 +96,38 @@ const EventResigtrationModal = () => {
             <DialogTitle>Event Registration</DialogTitle>
           </VisuallyHidden>
         </DialogHeader>
-        {isLoaded ? null : <Loading />}
-        {isLoaded && !isSignedIn ? <LoginMessage /> : null}
-        {isSignedIn && (
-          <>
-            {primaryStep === 0 ? (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(handelFormSubmit)}>
-                  <ScrollArea>
-                    <EventFormStep form={form} />
-                  </ScrollArea>
-                  <DialogFooter>
-                    <Button type="submit" className={cn("w-11/12 mt-2 mx-auto")}>
-                      Register
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-            ) : primaryStep === 1 ? (
-              <RegisterMessage />
-            ) : null}
-          </>
-        )}
+        <>
+          {primaryStep === 0 ? (
+            <CountDown
+              startDate={EVENT_REGISTRATION_START_DATE}
+              onCountdownEnd={() => setPrimaryStep(1)}
+            />
+          ) : primaryStep === 1 ? (
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(handelFormSubmit)}>
+                <ScrollArea>
+                  <EventFormStep form={form} />
+                </ScrollArea>
+                <DialogFooter>
+                  <Button
+                    type="submit"
+                    className={cn(
+                      "w-11/12 mt-2 mx-auto",
+                      pending && "cursor-not-allowed"
+                    )}
+                    disabled={pending}
+                  >
+                    Register
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          ) : primaryStep === 2 ? (
+            <RegisterMessage />
+          ) : primaryStep === 3 ? (
+            <RegistrationClosed />
+          ) : null}
+        </>
       </DialogContent>
     </Dialog>
   );

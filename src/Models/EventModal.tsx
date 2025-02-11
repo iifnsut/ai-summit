@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface IEvent extends Document {
-  googleId: string;
-  googleEmail: string;
+  // googleId: string;
+  // googleEmail: string;
   name: string;
   email: string;
   contact: string;
@@ -11,14 +11,14 @@ interface IEvent extends Document {
 }
 
 const EventSchema: Schema = new Schema({
-  googleId: { type: String, required: true, unique: true, index: true },
-  googleEmail: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    index: true,
-  },
+  // googleId: { type: String, required: true, unique: true, index: true },
+  // googleEmail: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  //   trim: true,
+  //   index: true,
+  // },
   name: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, match: /.+\@.+\..+/ },
   contact: { type: String, required: true, match: /^[6-9]\d{9}$/ },

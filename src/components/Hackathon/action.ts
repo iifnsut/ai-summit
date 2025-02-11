@@ -1,12 +1,16 @@
 "use server";
 
-import { currentUser  } from '@clerk/nextjs/server'
+import { currentUser } from "@clerk/nextjs/server";
 
-
-import { from1Schema as from1, from2Schema as from2, from3Schema as from3 } from "./formSchemas";
+import {
+  from1Schema as from1,
+  from2Schema as from2,
+  from3Schema as from3,
+} from "./formSchemas";
 import dbConnect from "@/lib/dbConnect";
 import HackathonModal from "@/Models/HackathonModel";
-import {  z } from "zod";
+import { z } from "zod";
+import fromSchema from "./formSchemas";
 
 export async function saveHackathonData({
   data,
@@ -54,8 +58,11 @@ export async function saveHackathonData({
         hackathonData.teamLeaderMobile = validData.teamLeaderMobile;
         hackathonData.teamLeaderWhatsApp = validData.teamLeaderWhatsApp;
         hackathonData.teamLeaderEmail = validData.teamLeaderEmail;
-        hackathonData.collegeName = validData.collegeName
-        hackathonData.completedSteps = Math.max(step, hackathonData.completedSteps);
+        hackathonData.collegeName = validData.collegeName;
+        hackathonData.completedSteps = Math.max(
+          step,
+          hackathonData.completedSteps
+        );
         await hackathonData.save();
       } else {
         await HackathonModal.create({
@@ -81,7 +88,10 @@ export async function saveHackathonData({
       if (step === 1) {
         const validData = from2.parse(data);
         hackathonData.teamMembers = validData.teamMembers;
-        hackathonData.completedSteps = Math.max(step, hackathonData.completedSteps);
+        hackathonData.completedSteps = Math.max(
+          step,
+          hackathonData.completedSteps
+        );
         await hackathonData.save();
       } else if (step === 2) {
         const validData = from3.parse(data);
@@ -89,7 +99,10 @@ export async function saveHackathonData({
         hackathonData.ideaDescription = validData.ideaDescription;
         hackathonData.prototypeYouTubeLink = validData.prototypeYouTubeLink;
         hackathonData.presentationFile = validData.presentationFile;
-        hackathonData.completedSteps = Math.max(step, hackathonData.completedSteps);
+        hackathonData.completedSteps = Math.max(
+          step,
+          hackathonData.completedSteps
+        );
         await hackathonData.save();
       } else {
         return {
@@ -100,13 +113,17 @@ export async function saveHackathonData({
       }
     }
 
-    return { success: true , message: "Updated successfully" };
+    return { success: true, message: "Updated successfully" };
   } catch (error) {
     console.log(error);
     if (error instanceof z.ZodError) {
       return { success: false, errors: error.flatten().fieldErrors };
     }
-    return { success: false, message: "Something went wrong", error: "server_error" };
+    return {
+      success: false,
+      message: "Something went wrong",
+      error: "server_error",
+    };
   }
 }
 
@@ -124,7 +141,9 @@ export async function getHackathonData() {
 
     await dbConnect();
 
-    const hackathonData = await HackathonModal.findOne({ googleId: userId }).lean().exec();
+    const hackathonData = await HackathonModal.findOne({ googleId: userId })
+      .lean()
+      .exec();
     if (!hackathonData) {
       return {
         success: false,
@@ -135,17 +154,23 @@ export async function getHackathonData() {
 
     // Convert _id fields to strings
     hackathonData._id = hackathonData._id.toString();
-    hackathonData.teamMembers = hackathonData.teamMembers.map((member: any) => ({
-      ...member,
-      _id: member._id.toString(),
-    }));
+    hackathonData.teamMembers = hackathonData.teamMembers.map(
+      (member: any) => ({
+        ...member,
+        _id: member._id.toString(),
+      })
+    );
 
     return { success: true, data: hackathonData };
   } catch (error) {
-    if(process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development") {
       console.log(error);
     }
-    return { success: false, message: "Something went wrong", error: "server_error" };
+    return {
+      success: false,
+      message: "Something went wrong",
+      error: "server_error",
+    };
   }
 }
 
@@ -172,7 +197,7 @@ export async function markFinalSubmission() {
       };
     }
 
-    if(hackathonData.status === "submitted") {
+    if (hackathonData.status === "submitted") {
       return {
         success: false,
         message: "Already submitted",
@@ -180,7 +205,7 @@ export async function markFinalSubmission() {
       };
     }
 
-    if(hackathonData.completedSteps < 2) {
+    if (hackathonData.completedSteps < 2) {
       return {
         success: false,
         message: "Please complete all the steps",
@@ -193,9 +218,48 @@ export async function markFinalSubmission() {
 
     return { success: true, message: "Submitted successfully" };
   } catch (error) {
-    if(process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development") {
       console.log(error);
     }
-    return { success: false, message: "Something went wrong", error: "server_error" };
+    return {
+      success: false,
+      message: "Something went wrong",
+      error: "server_error",
+    };
+  }
+}
+
+export async function saveCombinedData(data: z.infer<typeof fromSchema>) {
+  try {
+    const safeData = fromSchema.parse(data);
+    await dbConnect();
+    const newHackathon = new HackathonModal({
+      teamName: safeData.teamName,
+      teamLeaderName: safeData.teamLeaderName,
+      teamLeaderMobile: safeData.teamLeaderMobile,
+      teamLeaderWhatsApp: safeData.teamLeaderWhatsApp,
+      teamLeaderEmail: safeData.teamLeaderEmail,
+      collegeName: safeData.collegeName,
+      teamMembers: safeData.teamMembers,
+      problemStatementId: safeData.problemStatementId,
+      ideaDescription: safeData.ideaDescription,
+      prototypeYouTubeLink: safeData.prototypeYouTubeLink,
+      presentationFile: safeData.presentationFile,
+    });
+    await newHackathon.save();
+    return { success: true, message: "Submitted successfully" };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        errors: error.flatten().fieldErrors,
+        message: "Invalid data",
+      };
+    }
+    return {
+      success: false,
+      message: "Something went wrong",
+      error: "server_error",
+    };
   }
 }

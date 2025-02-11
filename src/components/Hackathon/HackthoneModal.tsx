@@ -11,29 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ArrowBigLeft, ArrowBigRight, ChevronRight } from "lucide-react";
-import { useCallback, useMemo, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Loading,
-  LoginMessage,
-  Step1,
-  Step2,
-  Step3,
-  Step4,
-  RegisterMessage,
-} from "./Steps";
+import { useCallback, useMemo, useState } from "react";
+import { useForm, useFormState } from "react-hook-form";
+import { RegisterMessage, Step1, Step2, Step3, Step4 } from "./Steps";
+import { saveCombinedData } from "./action";
 import { from1Schema, from2Schema, from3Schema } from "./formSchemas";
-import {
-  getHackathonData,
-  saveHackathonData,
-  markFinalSubmission,
-} from "./action";
-import { useToast } from "@/hooks/use-toast";
+import { RegistrationClosed, CountDown } from "./Steps";
+import { HACKATHON_START_DATE,HACKATHON_END_DATE } from "@/lib/constants";
 
 const steps: StepProps[] = [
   { title: "Step 1", description: "Team Details" },
@@ -47,8 +36,9 @@ export default function HackathonModal() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completeStep, setCompleteStep] = useState(0);
   const [membersCount, setMembersCount] = useState(3);
-  const [primaryCount, setPrimaryCount] = useState(1);
-  const { isSignedIn, isLoaded } = useUser();
+  const [primaryCount, setPrimaryCount] = useState( new Date() < HACKATHON_START_DATE ? 0 : new Date() > HACKATHON_END_DATE ? 3 : 1);
+  const [combinedData, setCombinedData] = useState<any>({});
+
 
   const form1 = useForm({
     resolver: zodResolver(from1Schema),
@@ -73,58 +63,6 @@ export default function HackathonModal() {
     }
   }, [currentStep, form1, form2, form3]);
 
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      getHackathonData().then((data) => {
-        const hackathonData = data?.data;
-        if (hackathonData) {
-          if (hackathonData.status === "submitted") {
-            setPrimaryCount(2);
-            return;
-          }
-
-          form1.setValue("teamName", hackathonData.teamName || "");
-          form1.setValue("teamLeaderName", hackathonData.teamLeaderName || "");
-          form1.setValue(
-            "teamLeaderMobile",
-            hackathonData.teamLeaderMobile || ""
-          );
-          form1.setValue(
-            "teamLeaderWhatsApp",
-            hackathonData.teamLeaderWhatsApp || ""
-          );
-          form1.setValue(
-            "teamLeaderEmail",
-            hackathonData.teamLeaderEmail || ""
-          );
-          form1.setValue("collegeName", hackathonData.collegeName || "");
-          form1.setValue("membersCount", hackathonData.teamMembers.length || 3);
-
-          form2.setValue("teamMembers", hackathonData.teamMembers || []);
-
-          form3.setValue(
-            "problemStatementId",
-            hackathonData.problemStatementId || ""
-          );
-          form3.setValue(
-            "ideaDescription",
-            hackathonData.ideaDescription || ""
-          );
-          form3.setValue(
-            "prototypeYouTubeLink",
-            hackathonData.prototypeYouTubeLink || ""
-          );
-          form3.setValue(
-            "presentationFile",
-            hackathonData.presentationFile || ""
-          );
-          setCompleteStep(Math.min(3, hackathonData.completedSteps));
-          setCurrentStep(Math.min(3, hackathonData.completedSteps + 1));
-        }
-      });
-    }
-  }, [isLoaded, isSignedIn, form1, form2, form3]);
-
   const handleNextStep = useCallback(() => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -146,22 +84,7 @@ export default function HackathonModal() {
 
     handleNextStep();
     try {
-      const response = await saveHackathonData({ data, step: currentStep });
-      console.log(response);
-      if (!response.success) {
-        console.error(response.error);
-        setCurrentStep(Math.min(0, currentStep - 1));
-        toast({
-          title: "Oops!",
-          description: response.message || "Something went wrong",
-          variant: "destructive",
-        });
-      }
-
-      toast({
-        title: "Success!",
-        description: response.message || "Updated successfully",
-      });
+      setCombinedData((prev) => ({ ...prev, ...data }));
     } catch (error) {
       console.error(error);
       setCurrentStep(currentStep - 1);
@@ -176,7 +99,7 @@ export default function HackathonModal() {
   const markSubmission = useCallback(async () => {
     if (currentStep === 3) {
       try {
-        const response = await markFinalSubmission();
+        const response = await saveCombinedData(combinedData);
         console.log(response);
         if (!response.success) {
           toast({
@@ -190,7 +113,7 @@ export default function HackathonModal() {
           title: "Success!",
           description: response.message || "Submitted successfully",
         });
-        setPrimaryCount((prev) => prev + 1);
+        setPrimaryCount(2);
       } catch (error) {
         console.error(error);
         toast({
@@ -207,7 +130,8 @@ export default function HackathonModal() {
         variant: "destructive",
       });
     }
-  }, [currentStep, toast]);
+  }, [currentStep, toast, combinedData]);
+  const { isSubmitting: pending } = useFormState({ control: form.control });
 
   const generateForm = useMemo(() => {
     switch (currentStep) {
@@ -218,12 +142,23 @@ export default function HackathonModal() {
       case 2:
         return <Step3 form={form3} />;
       case 3:
-        return <Step4 markSubmission={markSubmission} />;
+        return <Step4 markSubmission={markSubmission} pending={pending} />;
     }
-  }, [currentStep, form1, form2, form3, membersCount, markSubmission]);
+  }, [currentStep, form1, form2, form3, membersCount, markSubmission, pending]);
+
+  const modalClose = useCallback(() => {
+    if (primaryCount === 2) {
+      setPrimaryCount(1);
+      form1.reset();
+      form2.reset();
+      form3.reset();
+      setCurrentStep(0);
+      setCompleteStep(0);
+    }
+  }, [primaryCount, form1, form2, form3]);
 
   return (
-    <Dialog modal={false}>
+    <Dialog modal={false} onOpenChange={modalClose}>
       <DialogTrigger asChild>
         <Button className="rounded-full flex-1">
           Hackathon <ChevronRight />
@@ -235,67 +170,63 @@ export default function HackathonModal() {
             <DialogTitle>Hackathon Registration</DialogTitle>
           </VisuallyHidden>
         </DialogHeader>
-        {primaryCount === 1 ? (
+        {primaryCount === 0 ? (
+          <CountDown onCountdownEnd={() => setPrimaryCount(1)} startDate={HACKATHON_START_DATE} />
+        ) : primaryCount === 1 ? (
           <>
-            {isLoaded ? null : <Loading />}
+            <Stepper
+              steps={steps}
+              currentStep={currentStep}
+              setStep={(step) => {
+                if (form.formState.isValid) {
+                  setCurrentStep(step);
+                }
+              }}
+              completeStep={completeStep}
+            />
 
-            {isLoaded && !isSignedIn && <LoginMessage />}
-
-            {isLoaded && isSignedIn && (
-              <>
-                <Stepper
-                  steps={steps}
-                  currentStep={currentStep}
-                  setStep={(step) => {
-                    if (form.formState.isValid) {
-                      setCurrentStep(step);
-                    }
-                  }}
-                  completeStep={completeStep}
-                />
-
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col gap-4"
-                  >
-                    <ScrollArea className="mb-1 flex-1 max-h-[60vh]">
-                      {generateForm}
-                    </ScrollArea>
-                    <DialogFooter className="w-full">
-                      <div className="w-full flex justify-between gap-4 mt-4">
-                        <Button
-                          type="button"
-                          onClick={handlePreviousStep}
-                          disabled={currentStep === 0}
-                          variant="outline"
-                          size="icon"
-                          className={cn("", currentStep === 0 && "invisible")}
-                        >
-                          <ArrowBigLeft />
-                          <span className="sr-only">Previous</span>
-                        </Button>
-                        <Button
-                          type="submit"
-                          variant="outline"
-                          size="icon"
-                          disabled={currentStep === steps.length - 1}
-                          className={cn(
-                            currentStep === steps.length - 1 && "hidden"
-                          )}
-                        >
-                          <ArrowBigRight />
-                          <span className="sr-only">Next</span>
-                        </Button>
-                      </div>
-                    </DialogFooter>
-                  </form>
-                </Form>
-              </>
-            )}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-4"
+              >
+                <ScrollArea className="mb-1 flex-1 max-h-[60vh]">
+                  {generateForm}
+                </ScrollArea>
+                <DialogFooter className="w-full">
+                  <div className="w-full flex justify-between gap-4 mt-4">
+                    <Button
+                      type="button"
+                      onClick={handlePreviousStep}
+                      disabled={currentStep === 0}
+                      variant="outline"
+                      size="icon"
+                      className={cn("", currentStep === 0 && "invisible")}
+                    >
+                      <ArrowBigLeft />
+                      <span className="sr-only">Previous</span>
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      size="icon"
+                      disabled={currentStep === steps.length - 1}
+                      className={cn(
+                        currentStep === steps.length - 1 && "hidden"
+                      )}
+                    >
+                      <ArrowBigRight />
+                      <span className="sr-only">Next</span>
+                    </Button>
+                  </div>
+                </DialogFooter>
+              </form>
+            </Form>
           </>
         ) : primaryCount === 2 ? (
           <RegisterMessage />
+        ) : primaryCount === 3 ? (
+          <RegistrationClosed />
         ) : null}
       </DialogContent>
     </Dialog>

@@ -13,32 +13,32 @@ export async function registerEvent({
   data: z.infer<typeof formSchema>;
 }) {
   try {
-    const user = await currentUser();
-    const userId = user?.id;
-    const userEmail = user?.emailAddresses[0]?.emailAddress;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please login to continue",
-        error: "unauthorized",
-      };
-    }
+    // const user = await currentUser();
+    // const userId = user?.id;
+    // const userEmail = user?.emailAddresses[0]?.emailAddress;
+    // if (!userId) {
+    //   return {
+    //     success: false,
+    //     message: "Please login to continue",
+    //     error: "unauthorized",
+    //   };
+    // }
 
     await dbConnect();
 
-    const eventData = await EventModal.findOne({ googleId: userId });
-    if (eventData) {
-      return {
-        success: false,
-        message: "You have already registered for the event",
-        error: "registered",
-      };
-    }
+    // const eventData = await EventModal.findOne({ googleId: userId });
+    // if (eventData) {
+    //   return {
+    //     success: false,
+    //     message: "You have already registered for the event",
+    //     error: "registered",
+    //   };
+    // }
 
     const validData = formSchema.parse(data);
     const newEvent = new EventModal({
-      googleId: userId,
-      googleEmail: userEmail,
+      // googleId: userId,
+      // googleEmail: userEmail,
       name: validData.name,
       email: validData.email,
       contact: validData.contact,
@@ -65,40 +65,40 @@ export async function registerEvent({
   }
 }
 
-export async function isAlreadyRegistered() {
-  try {
-    const user = await currentUser();
-    const userId = user?.id;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please login to continue",
-        error: "unauthorized",
-      };
-    }
+// export async function isAlreadyRegistered() {
+//   try {
+//     const user = await currentUser();
+//     const userId = user?.id;
+//     if (!userId) {
+//       return {
+//         success: false,
+//         message: "Please login to continue",
+//         error: "unauthorized",
+//       };
+//     }
 
-    await dbConnect();
+//     await dbConnect();
 
-    const eventData = await EventModal.findOne({ googleId: userId }).lean();
-    if (eventData) {
-      return {
-        success: true,
-        message: "You have already registered for the event",
-      };
-    }
-    return {
-      success: false,
-      message: "You have not registered for the event",
-      error: "not-registered",
-    };
-  } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.log(error);
-    }
-    return {
-      success: false,
-      message: "Event Registration Failed",
-      error: "internal",
-    };
-  }
-}
+//     const eventData = await EventModal.findOne({ googleId: userId }).lean();
+//     if (eventData) {
+//       return {
+//         success: true,
+//         message: "You have already registered for the event",
+//       };
+//     }
+//     return {
+//       success: false,
+//       message: "You have not registered for the event",
+//       error: "not-registered",
+//     };
+//   } catch (error) {
+//     if (process.env.NODE_ENV === "development") {
+//       console.log(error);
+//     }
+//     return {
+//       success: false,
+//       message: "Event Registration Failed",
+//       error: "internal",
+//     };
+//   }
+// }
