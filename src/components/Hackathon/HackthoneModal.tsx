@@ -22,7 +22,7 @@ import { RegisterMessage, Step1, Step2, Step3, Step4 } from "./Steps";
 import { saveCombinedData } from "./action";
 import { from1Schema, from2Schema, from3Schema } from "./formSchemas";
 import { RegistrationClosed, CountDown } from "./Steps";
-import { HACKATHON_START_DATE,HACKATHON_END_DATE } from "@/lib/constants";
+import { HACKATHON_START_DATE, HACKATHON_END_DATE } from "@/lib/constants";
 
 const steps: StepProps[] = [
   { title: "Step 1", description: "Team Details" },
@@ -36,9 +36,14 @@ export default function HackathonModal() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completeStep, setCompleteStep] = useState(0);
   const [membersCount, setMembersCount] = useState(3);
-  const [primaryCount, setPrimaryCount] = useState( new Date() < HACKATHON_START_DATE ? 0 : new Date() > HACKATHON_END_DATE ? 3 : 1);
+  const [primaryCount, setPrimaryCount] = useState(
+    new Date() < HACKATHON_START_DATE
+      ? 0
+      : new Date() > HACKATHON_END_DATE
+      ? 3
+      : 1
+  );
   const [combinedData, setCombinedData] = useState<any>({});
-
 
   const form1 = useForm({
     resolver: zodResolver(from1Schema),
@@ -84,7 +89,11 @@ export default function HackathonModal() {
 
     handleNextStep();
     try {
-      setCombinedData((prev) => ({ ...prev, ...data }));
+      setCombinedData((prev: any) => ({
+        ...prev,
+        ...data,
+      }));
+
     } catch (error) {
       console.error(error);
       setCurrentStep(currentStep - 1);
@@ -171,7 +180,10 @@ export default function HackathonModal() {
           </VisuallyHidden>
         </DialogHeader>
         {primaryCount === 0 ? (
-          <CountDown onCountdownEnd={() => setPrimaryCount(1)} startDate={HACKATHON_START_DATE} />
+          <CountDown
+            onCountdownEnd={() => setPrimaryCount(1)}
+            startDate={HACKATHON_START_DATE}
+          />
         ) : primaryCount === 1 ? (
           <>
             <Stepper
