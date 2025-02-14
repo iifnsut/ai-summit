@@ -120,7 +120,7 @@ export default function Home() {
               className="rounded-full flex-1 w-full"
             /> */}
             <Button asChild variant={"secondary"} className="rounded-full flex-1 w-full">
-              <Link href="">
+              <Link target="_blank" href="https://drive.google.com/file/d/1otv8_LsqEkRmwjfCM_r5ijkYLAChhgkR/view?usp=sharing">
                 More Info <ChevronRight />
               </Link>
             </Button>

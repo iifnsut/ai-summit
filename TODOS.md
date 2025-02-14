@@ -2,7 +2,7 @@
 - [x] Update addresses and phone number in footer
 - [x] increase navbar size
 - [ ] replace register button in navbar with NSUT IIF Embassy logo
-- [ ] replace register in hero section with more info button with drive link
+- [x] replace register in hero section with more info button with drive link
 - [ ] change hero section logo
 - [ ] create carousel for events
 - [ ] change favicon
