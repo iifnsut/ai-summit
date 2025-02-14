@@ -1,2 +1,12 @@
-- [ ] Add Social Links in footer
-- [ ] Update addresses and phone number in footer
+- [x] Add Social Links in footer
+- [x] Update addresses and phone number in footer
+- [x] increase navbar size
+- [ ] replace register button in navbar with NSUT IIF Embassy logo
+- [ ] replace register in hero section with more info button with drive link
+- [ ] change hero section logo
+- [ ] create carousel for events
+- [ ] change favicon
+- [x] add Shivam's number
+- [ ] fix time for hackathon registration 19th FEB 2025 10:15am
+- [ ] add speaker section
+- [ ] fix mobile layout pop-up for hackathon

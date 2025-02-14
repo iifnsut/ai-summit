@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Facebook, Twitter, Linkedin, Youtube, Instagram, Globe ,Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Youtube, Instagram, Globe, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import { Button } from "../ui/button";
@@ -54,7 +54,7 @@ export default function Footer(props: HTMLAttributes<HTMLElement>) {
 
           <span>
             <Phone className="inline" />
-            <a href="tel:+917838850636"> +91 7838850636</a>
+            <a href="tel:+917838850636"> +91 7838850636</a>,<a href="tel:+917065818944"> +91 7065818944</a>
           </span>
           <span>
             <Mail className="inline" />

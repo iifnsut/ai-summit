@@ -26,18 +26,8 @@ export default function Header(allProps: props) {
   return (
     <motion.header
       {...props}
-      className={cn(
-        "w-full h-20 z-20 flex justify-between items-center py-4 px-6 fixed top-0 animate-slideDown",
-        props?.className
-      )}
-    >
-      <Image
-        src="/images/logoHeader.png"
-        alt="logo"
-        width={3547}
-        height={821}
-        className="h-full object-contain w-min"
-      />
+      className={cn("w-full h-24 z-20 flex justify-between items-center py-5 px-8 fixed top-0 animate-slideDown", props?.className)}>
+      <Image src="/images/logoHeader.png" alt="logo" width={3547} height={821} className="h-full object-contain w-min" />
       <NavMenu tabs={tabs} className="hidden md:flex" />
       <div className="hidden md:inline-flex">
         {/* <SignedOut>
@@ -50,9 +40,9 @@ export default function Header(allProps: props) {
         <SignedIn>
           <UserButton />
         </SignedIn> */}
-         <RegisterButton className="">
-         Register <ChevronRight />
-         </RegisterButton>
+        <RegisterButton className="">
+          Register <ChevronRight />
+        </RegisterButton>
       </div>
       <div className="flex justify-end items-center w-full md:hidden gap-4">
         <SignedIn>
@@ -89,10 +79,7 @@ function NavMenu({ tabs, className }: { tabs: tab[]; className: string }) {
         {tabs.map((tab, index) => (
           <NavigationMenuItem key={index} className="w-full flex">
             <Link href={tab.href} legacyBehavior passHref>
-              <NavigationMenuLink
-                active={tab?.active}
-                className={cn(navigationMenuTriggerStyle(), "flex-1")}
-              >
+              <NavigationMenuLink active={tab?.active} className={cn(navigationMenuTriggerStyle(), "flex-1")}>
                 {tab.title}
               </NavigationMenuLink>
             </Link>
