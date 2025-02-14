@@ -29,8 +29,15 @@ export default function Header(allProps: props) {
       className={cn("w-full h-24 z-20 flex justify-between items-center py-5 px-8 fixed top-0 animate-slideDown", props?.className)}>
       <Image src="/images/logoHeader.png" alt="logo" width={3547} height={821} className="h-full object-contain w-min" />
       <NavMenu tabs={tabs} className="hidden md:flex" />
-      <div className="hidden md:inline-flex">
-        {/* <SignedOut>
+      <Image
+        src="/images/logoHeader2.png"
+        alt="logo"
+        width={8174}
+        height={1369}
+        className="h-full object-contain w-min hidden lg:inline-block"
+      />
+      {/* <div className="hidden md:inline-flex">
+        <SignedOut>
           <SignInButton>
             <RegisterButton className="">
               Register <ChevronRight />
@@ -39,11 +46,8 @@ export default function Header(allProps: props) {
         </SignedOut>
         <SignedIn>
           <UserButton />
-        </SignedIn> */}
-        <RegisterButton className="">
-          Register <ChevronRight />
-        </RegisterButton>
-      </div>
+        </SignedIn>
+      </div> */}
       <div className="flex justify-end items-center w-full md:hidden gap-4">
         <SignedIn>
           <UserButton />
@@ -58,13 +62,13 @@ export default function Header(allProps: props) {
             <SheetTitle></SheetTitle>
             <div className="flex flex-col items-stretch gap-4 p-4">
               <NavMenu tabs={tabs} className="w-full max-w-full block" />
-              <SignedOut>
+              {/* <SignedOut>
                 <SignInButton>
                   <RegisterButton className="">
                     Register <ChevronRight />
                   </RegisterButton>
                 </SignInButton>
-              </SignedOut>
+              </SignedOut> */}
             </div>
           </SheetContent>
         </Sheet>

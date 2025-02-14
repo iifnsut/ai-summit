@@ -1,9 +1,9 @@
 - [x] Add Social Links in footer
 - [x] Update addresses and phone number in footer
 - [x] increase navbar size
-- [ ] replace register button in navbar with NSUT IIF Embassy logo
+- [x] replace register button in navbar with NSUT IIF Embassy logo
 - [x] replace register in hero section with more info button with drive link
-- [ ] change hero section logo
+- [x] change hero section logo
 - [ ] create carousel for events
 - [ ] change favicon
 - [x] add Shivam's number
