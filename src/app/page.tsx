@@ -121,6 +121,7 @@ export default function Home() {
     { title: "Home", href: "#home", active: true },
     { title: "About Us", href: "#about" },
     { title: "Events", href: "#events" },
+    { title: "Speaker", href: "#speakers" },
     { title: "Timeline", href: "#timeline" },
     { title: "FAQs", href: "#FAQs" },
   ]);
@@ -225,7 +226,7 @@ export default function Home() {
       <Box
         onViewportEnter={updateTabs}
         id="speakers"
-        className="w-full min-h-screen h-auto mt-4 mb-12 flex items-center justify-center bg-background flex-col">
+        className="w-full min-h-screen h-auto flex items-center justify-center bg-background flex-col">
         <Heading>SPEAKERS</Heading>
         <div className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center">
           {speakersList.map((speaker, index) => (
@@ -233,10 +234,7 @@ export default function Home() {
           ))}
         </div>
       </Box>
-      <Box
-        onViewportEnter={updateTabs}
-        id="timeline"
-        className="mt-12 w-full h-screen flex flex-col items-center justify-center bg-background">
+      <Box onViewportEnter={updateTabs} id="timeline" className="w-full h-screen flex flex-col items-center justify-center bg-background">
         <Heading>TIMELINE</Heading>
         <Timeline timelineData={timelineData} />
       </Box>
