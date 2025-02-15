@@ -78,7 +78,30 @@ const speakersList = [
   {
     name: "Dr. Alok Nikhil Jha",
     img: "https://media.licdn.com/dms/image/v2/D4D03AQH98CY9NbsMwA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674362925393?e=1744848000&v=beta&t=q-5JMLjui0xCnUlD9lGRBn3fWmAJ9Uz2UAlx7zVL-G8",
-    linkedin: "hhttps://www.linkedin.com/in/aloknikhil", 
+    linkedin: "hhttps://www.linkedin.com/in/aloknikhil",
+  },
+];
+
+const mentionList = [
+  {
+    name: "Prof. Anand Shrivastav",
+    img: "https://media.licdn.com/dms/image/v2/C4E03AQFabAfqHWAQkQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1658841704663?e=1744848000&v=beta&t=SE78utfLsmr2qLiD3GbIH3sBft5QDLgb3dw2jWdtIA4",
+    linkedin: "https://www.linkedin.com/in/anand-srivastava-a930a262/",
+  },
+  {
+    name: "Prof. Prerna Gaur",
+    img: "https://media.licdn.com/dms/image/v2/C5103AQFL9xqHecI5HA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1521311125753?e=1744848000&v=beta&t=gzAJMrlOeDdutdCFNyDb2P8UcUCMETpbrU3_e7y33Rc",
+    linkedin: "https://www.linkedin.com/in/prof-prerna-gaur-1819621/",
+  },
+  {
+    name: "Himanshu Singhal",
+    img: "https://media.licdn.com/dms/image/v2/D4D03AQFoKMUEOE8V9A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1703089907067?e=1744848000&v=beta&t=PrZ9HTT-FslFILRcYaD2u1Pfj5FkUnQUMVxR2tpsLGk",
+    linkedin: "https://www.linkedin.com/in/himanshusinghal4/",
+  },
+  {
+    name: "Maya Sherman",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQE8swB3MydWEA/profile-displayphoto-shrink_400_400/B56ZR0MC3VH0Ak-/0/1737116103964?e=1744848000&v=beta&t=4wqYFtBkxvqwzTtOP1iyQgOMbdo9OpvrtEMdk3dGSCk",
+    linkedin: "https://www.linkedin.com/in/maya-sherman-02b474115/",
   },
 ];
 
@@ -180,7 +203,7 @@ export default function Home() {
           transition={{ duration: 2, delay: 1, ease: "easeInOut" }}
           viewport={{ amount: "all", margin: "0px" }}
           className="animate-growIn delay-1000 fill-mode-both flex flex-col items-center justify-center w-full md:w-2/3">
-          <Image src={"/images/logo.png"} alt="logo" width={1920} height={720} className="w-auto md:w-full" />
+          <Image src={"/images/logo.png"} alt="logo" width={1920} height={720} className="w-auto px-3 md:px-0 md:w-full" />
           <div className="flex flex-row w-full md:w-1/2 px-6 gap-4 justify-center">
             {/* <EventRegisterButton className="rounded-full flex-1 w-full">
                 Hackathon <ChevronRight />
@@ -201,7 +224,7 @@ export default function Home() {
       <Box
         onViewportEnter={updateTabs}
         id="about"
-        className="w-full h-screen flex flex-col gap-4 items-center justify-center bg-gradient-to-b from-background/0 via-background/100 to-background">
+        className="w-full min-h-screen flex flex-col gap-4 items-center justify-center bg-gradient-to-b from-background/0 via-background/100 to-background py-4">
         <Heading>ABOUT US</Heading>
         <motion.div
           whileHover={{ scale: 1.01 }}
@@ -223,15 +246,24 @@ export default function Home() {
             revolutionizing healthcare, agriculture, and communities, creating a future that empowers all.
           </div>
         </motion.div>
+        <Heading className="text-[clamp(1rem,7vw,5rem)] mt-8">Honorable Mentions</Heading>
+        <div className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center">
+          {mentionList.map((speaker, index) => (
+            <SpeakerCard key={index} name={speaker.name} img={speaker.img} linkedin={speaker.linkedin} index={index} />
+          ))}
+        </div>
       </Box>
-      <Box onViewportEnter={updateTabs} id="events" className="w-full min-h-screen flex items-center justify-center bg-background flex-col">
+      <Box
+        onViewportEnter={updateTabs}
+        id="events"
+        className="w-full min-h-screen flex items-center justify-center bg-background flex-col gap-2 md:gap-6 py-16">
         <Heading>EVENTS</Heading>
         <div className="px-2 md:w-2/3">
           <Carousel opts={{ loop: true }} className="aspect-video">
             <CarouselContent>
               {eventsData.map((event, index) => (
                 <CarouselItem key={index}>
-                  <div className="w-full flex items-center flex-col gap-4">
+                  <div className="w-full flex items-center flex-col gap-4 md:gap-12">
                     {event.image}
                     {event.button}
                   </div>
@@ -246,11 +278,9 @@ export default function Home() {
       <Box
         onViewportEnter={updateTabs}
         id="speakers"
-        className="w-full min-h-screen h-auto flex items-center justify-center bg-background flex-col">
+        className="w-full min-h-screen h-auto flex items-center justify-center bg-background flex-col py-16">
         <Heading>SPEAKERS</Heading>
-        <div
-          className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center"
-        >
+        <div className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center">
           {speakersList.map((speaker, index) => (
             <SpeakerCard key={index} name={speaker.name} img={speaker.img} linkedin={speaker.linkedin} index={index} />
           ))}

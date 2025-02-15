@@ -7,14 +7,13 @@
 - [x] create carousel for events
 - [x] change favicon
 - [x] add Shivam's number
-- [ ] fix time for hackathon registration 19th FEB 2025 10:15am
-- [ ] add speaker section
-- [ ] fix mobile layout pop-up for hackathon
-- [ ] increase spacing between speaker and events
-- [ ] increase spacing between events heading and image
-- [ ] Honorable mentions after about section
-  - [ ] Prof. Anand Shrivastav
-  - [ ] Prof. Prerna Gaur
-  - [ ] Himanshu Singhal
-  - [ ] Maya Sherman
-- [ ]
+- [x] fix time for hackathon registration 19th FEB 2025 10:15am
+- [x] add speaker section
+- [x] fix mobile layout pop-up for hackathon
+- [x] increase spacing between speaker and events
+- [x] increase spacing between events heading and image
+- [x] Honorable mentions after about section
+  - [x] Prof. Anand Shrivastav
+  - [x] Prof. Prerna Gaur
+  - [x] Himanshu Singhal
+  - [x] Maya Sherman
