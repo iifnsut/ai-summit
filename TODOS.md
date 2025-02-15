@@ -10,3 +10,11 @@
 - [ ] fix time for hackathon registration 19th FEB 2025 10:15am
 - [ ] add speaker section
 - [ ] fix mobile layout pop-up for hackathon
+- [ ] increase spacing between speaker and events
+- [ ] increase spacing between events heading and image
+- [ ] Honorable mentions after about section
+  - [ ] Prof. Anand Shrivastav
+  - [ ] Prof. Prerna Gaur
+  - [ ] Himanshu Singhal
+  - [ ] Maya Sherman
+- [ ]
