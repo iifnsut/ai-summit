@@ -4,8 +4,8 @@
 - [x] replace register button in navbar with NSUT IIF Embassy logo
 - [x] replace register in hero section with more info button with drive link
 - [x] change hero section logo
-- [ ] create carousel for events
-- [ ] change favicon
+- [x] create carousel for events
+- [x] change favicon
 - [x] add Shivam's number
 - [ ] fix time for hackathon registration 19th FEB 2025 10:15am
 - [ ] add speaker section

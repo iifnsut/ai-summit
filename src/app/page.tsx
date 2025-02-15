@@ -57,12 +57,18 @@ export default function Home() {
   ];
   const eventsData = [
     {
-      image: <Image src={"/images/logo.png"} alt="placeholder" width={1920} height={720} />,
+      image: <Image src={"/images/events2.png"} alt="Hackathon" width={1280} height={720} className="rounded-xl border-border border" />,
       button: <HackthoneModal />,
     },
     {
-      image: <Image src={"/images/logo.png"} alt="placeholder" width={1920} height={720} />,
-      button: <Button />,
+      image: <Image src={"/images/events1.png"} alt="Inauguration" width={1280} height={720} className="rounded-xl border-border border" />,
+      button: (
+        <Button className="rounded-full" asChild>
+          <Link target="_blank" href="https://forms.gle/qmxhph9dTqQQzfm9A">
+            Register <ChevronRight />
+          </Link>
+        </Button>
+      ),
     },
   ];
   const headerBorder = useTransform(homeScroll.scrollYProgress, [0, 1], ["hsla(var(--border) / 1)", "hsla(var(--border) / 0)"]);
@@ -153,14 +159,14 @@ export default function Home() {
           </div>
         </motion.div>
       </Box>
-      <Box onViewportEnter={updateTabs} id="events" className="w-full h-screen flex items-center justify-center bg-background flex-col">
+      <Box onViewportEnter={updateTabs} id="events" className="w-full min-h-screen flex items-center justify-center bg-background flex-col">
         <Heading>EVENTS</Heading>
-        <div className="px-16 md:px-64">
+        <div className="px-2 md:w-2/3">
           <Carousel opts={{ loop: true }} className="aspect-video">
             <CarouselContent>
               {eventsData.map((event, index) => (
                 <CarouselItem key={index}>
-                  <div className="w-full flex items-center flex-col">
+                  <div className="w-full flex items-center flex-col gap-4">
                     {event.image}
                     {event.button}
                   </div>
