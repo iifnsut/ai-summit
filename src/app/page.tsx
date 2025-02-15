@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import SpeakerCard from "@/components/includes/SpeakerCard";
 
-
 const speakersList = [
   {
     name: "Mrs. Ankita Anand",
@@ -63,7 +62,7 @@ const speakersList = [
   },
   {
     name: "Kamesh Shekar",
-    img: "https://media.licdn.com/dms/image/v2/D5603AQF4Hykq590-Sg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1666723222608?e=1744848000&v=beta&t=rcbPuY5SShu2SpolRTGatoxJ5yst03eYOJ5kzer4Bx0", 
+    img: "https://media.licdn.com/dms/image/v2/D5603AQF4Hykq590-Sg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1666723222608?e=1744848000&v=beta&t=rcbPuY5SShu2SpolRTGatoxJ5yst03eYOJ5kzer4Bx0",
     linkedin: "https://www.linkedin.com/in/kamesh-shekar-5456819b",
   },
   {
@@ -74,13 +73,13 @@ const speakersList = [
   {
     name: "Dr. Ankur Gupta",
     img: "https://media.licdn.com/dms/image/v2/C4D03AQGtczScb_6ZCg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516862967008?e=1744848000&v=beta&t=rOq6WToafHeEPxhbbzlwmdGi-oLoR9EjYPfZ2YYuGHw",
-    linkedin: "https://www.linkedin.com/in/ankursynon", 
+    linkedin: "https://www.linkedin.com/in/ankursynon",
   },
   {
     name: "Dr. Alok Nikhil Jha",
     img: "https://media.licdn.com/dms/image/v2/D4D03AQH98CY9NbsMwA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674362925393?e=1744848000&v=beta&t=q-5JMLjui0xCnUlD9lGRBn3fWmAJ9Uz2UAlx7zVL-G8",
     linkedin: "hhttps://www.linkedin.com/in/aloknikhil", 
-  }
+  },
 ];
 
 export default function Home() {
@@ -122,12 +121,18 @@ export default function Home() {
   ];
   const eventsData = [
     {
-      image: <Image src={"/images/logo.png"} alt="placeholder" width={1920} height={720} />,
+      image: <Image src={"/images/events2.png"} alt="Hackathon" width={1280} height={720} className="rounded-xl border-border border" />,
       button: <HackthoneModal />,
     },
     {
-      image: <Image src={"/images/logo.png"} alt="placeholder" width={1920} height={720} />,
-      button: <Button />,
+      image: <Image src={"/images/events1.png"} alt="Inauguration" width={1280} height={720} className="rounded-xl border-border border" />,
+      button: (
+        <Button className="rounded-full" asChild>
+          <Link target="_blank" href="https://forms.gle/qmxhph9dTqQQzfm9A">
+            Register <ChevronRight />
+          </Link>
+        </Button>
+      ),
     },
   ];
   const headerBorder = useTransform(homeScroll.scrollYProgress, [0, 1], ["hsla(var(--border) / 1)", "hsla(var(--border) / 0)"]);
@@ -136,6 +141,7 @@ export default function Home() {
     { title: "Home", href: "#home", active: true },
     { title: "About Us", href: "#about" },
     { title: "Events", href: "#events" },
+    { title: "Speaker", href: "#speakers" },
     { title: "Timeline", href: "#timeline" },
     { title: "FAQs", href: "#FAQs" },
   ]);
@@ -218,14 +224,14 @@ export default function Home() {
           </div>
         </motion.div>
       </Box>
-      <Box onViewportEnter={updateTabs} id="events" className="w-full h-screen flex items-center justify-center bg-background flex-col">
+      <Box onViewportEnter={updateTabs} id="events" className="w-full min-h-screen flex items-center justify-center bg-background flex-col">
         <Heading>EVENTS</Heading>
-        <div className="px-16 md:px-64">
+        <div className="px-2 md:w-2/3">
           <Carousel opts={{ loop: true }} className="aspect-video">
             <CarouselContent>
               {eventsData.map((event, index) => (
                 <CarouselItem key={index}>
-                  <div className="w-full flex items-center flex-col">
+                  <div className="w-full flex items-center flex-col gap-4">
                     {event.image}
                     {event.button}
                   </div>
@@ -237,27 +243,20 @@ export default function Home() {
           </Carousel>
         </div>
       </Box>
-       <Box
+      <Box
         onViewportEnter={updateTabs}
         id="speakers"
-        className="w-full min-h-screen h-auto mt-4 mb-12 flex items-center justify-center bg-background flex-col"
-      >
+        className="w-full min-h-screen h-auto flex items-center justify-center bg-background flex-col">
         <Heading>SPEAKERS</Heading>
         <div
           className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center"
         >
           {speakersList.map((speaker, index) => (
-            <SpeakerCard
-              key={index}
-              name={speaker.name}
-              img={speaker.img}
-              linkedin={speaker.linkedin}
-              index={index}
-            />
+            <SpeakerCard key={index} name={speaker.name} img={speaker.img} linkedin={speaker.linkedin} index={index} />
           ))}
         </div>
       </Box>
-      <Box onViewportEnter={updateTabs} id="timeline" className="mt-12 w-full h-screen flex flex-col items-center justify-center bg-background">
+      <Box onViewportEnter={updateTabs} id="timeline" className="w-full h-screen flex flex-col items-center justify-center bg-background">
         <Heading>TIMELINE</Heading>
         <Timeline timelineData={timelineData} />
       </Box>
