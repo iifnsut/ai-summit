@@ -11,7 +11,23 @@ import { Toaster } from "@/components/ui/toaster"
 export const metadata: Metadata = {
   title: "AI4Humanity Summit Delhi",
   description: "NSUT-IIF",
+  openGraph: {
+    title: "AI4Humanity Summit Delhi",
+    description:
+      "Step into the Delhi AI4Humanity Summit 2025, where NSUT IIF and the Embassy of Israel bring together innovators, thinkers, and changemakers to harness AI for a better world. Over a month of hackathons, competitions, and inspiring talks, explore how AI is revolutionizing healthcare, agriculture, and communities, creating a future that empowers all.",
+    type: "website",
+    url: "https://ai4humanitydelhi.in/",
+    images: [
+      {
+        url: "https://ai4humanitydelhi.in/images/logo.png",
+        width: 1200,
+        height: 720,
+        alt: "AI4Humanity Summit Delhi",
+      },
+    ],
+  },
 };
+
 
 export default function RootLayout({
   children,

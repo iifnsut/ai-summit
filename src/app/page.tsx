@@ -17,6 +17,51 @@ import EventResigtrationModal from "@/components/EventRegistration/EventModal";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import SpeakerCard from "@/components/includes/SpeakerCard";
+
+
+const speakersList = [
+  {
+    name: "Dr. Rajbir Singh",
+    img: "https://media.licdn.com/dms/image/v2/C4D03AQFNoS-zyfAEKg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516249646426?e=1744848000&v=beta&t=uHiv04CynINV6E28PBamgCstb_op0zxVoujH2A3ARxI",
+    linkedin: "https://www.linkedin.com/in/rajbirsingh",
+  },
+  {
+    name: "Rohet Sareen",
+    img: "https://media.licdn.com/dms/image/v2/C4D03AQEPJBnmqFHVSg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1662578287791?e=1744848000&v=beta&t=obSBFFli-3p0wKZApHayqi3zrV6mNREF-Djqbb3N5ew",
+    linkedin: "https://www.linkedin.com/in/rohetsareen",
+  },
+  {
+    name: "Mr. Mayank Jain",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQEo_MgHMLkupg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731858003040?e=1744848000&v=beta&t=MZhn2xgJx4WMzxF0MYAu128RknrF4BX9AGMGPVBL_5c",
+    linkedin: "https://www.linkedin.com/in/mysticmayank",
+  },
+  {
+    name: "Meemansa Agarwal",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQGwzfYVtzESow/profile-displayphoto-shrink_400_400/B56ZPJXvRDHIAk-/0/1734250264959?e=1744848000&v=beta&t=A5_VinCWzEgerBdtcG3L6hE5X877PiwnRcR6JzKVwMI",
+    linkedin: "https://www.linkedin.com/in/meemansa-agarwal-a22323242",
+  },
+  {
+    name: "Maya Sherman",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQE8swB3MydWEA/profile-displayphoto-shrink_400_400/B56ZR0MC3VH0Ak-/0/1737116103964?e=1744848000&v=beta&t=4wqYFtBkxvqwzTtOP1iyQgOMbdo9OpvrtEMdk3dGSCk",
+    linkedin: "https://www.linkedin.com/in/maya-sherman-02b474115",
+  },
+  {
+    name: "Kamesh Shekar",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQF4Hykq590-Sg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1666723222608?e=1744848000&v=beta&t=rcbPuY5SShu2SpolRTGatoxJ5yst03eYOJ5kzer4Bx0", 
+    linkedin: "https://www.linkedin.com/in/kamesh-shekar-5456819b",
+  },
+  {
+    name: "Himanshu Joshi",
+    img: "https://media.licdn.com/dms/image/v2/C5103AQHW2TsbE-a4iw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1586338144824?e=1744848000&v=beta&t=VdoJNWGL727v6nVU8zg-Xo34skVXTjjqEbBqp0M_gQ4",
+    linkedin: "https://www.linkedin.com/in/himanshujoshi1983",
+  },
+  {
+    name: "Dr. Ankur Gupta",
+    img: "https://media.licdn.com/dms/image/v2/C4D03AQGtczScb_6ZCg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516862967008?e=1744848000&v=beta&t=rOq6WToafHeEPxhbbzlwmdGi-oLoR9EjYPfZ2YYuGHw",
+    linkedin: "https://www.linkedin.com/in/ankursynon", 
+  }
+];
 
 export default function Home() {
   const homeRef = useRef(null);
@@ -178,7 +223,27 @@ export default function Home() {
           </Carousel>
         </div>
       </Box>
-      <Box onViewportEnter={updateTabs} id="timeline" className="w-full h-screen flex flex-col items-center justify-center bg-background">
+       <Box
+        onViewportEnter={updateTabs}
+        id="speakers"
+        className="w-full min-h-screen h-auto mt-4 mb-12 flex items-center justify-center bg-background flex-col"
+      >
+        <Heading>SPEAKERS</Heading>
+        <div
+          className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center"
+        >
+          {speakersList.map((speaker, index) => (
+            <SpeakerCard
+              key={index}
+              name={speaker.name}
+              img={speaker.img}
+              linkedin={speaker.linkedin}
+              index={index}
+            />
+          ))}
+        </div>
+      </Box>
+      <Box onViewportEnter={updateTabs} id="timeline" className="mt-12 w-full h-screen flex flex-col items-center justify-center bg-background">
         <Heading>TIMELINE</Heading>
         <Timeline timelineData={timelineData} />
       </Box>

@@ -419,19 +419,19 @@ function CountDown({
   return (
     <div className="flex items-center justify-center m-4 md:mt-8 p-4 md:p-6 bg-opacity-25 rounded-lg">
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-center">
+        <h1 className="text-lg md:text-3xl font-bold text-center">
           Registration not started yet!⏳
         </h1>
         <div className="flex items-center justify-center gap-4 mt-4">
           {["days", "hours", "minutes", "seconds"].map((unit, index) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-2 bg-gray-500 bg-opacity-75 p-4 rounded"
+              className="flex flex-col items-center gap-2 bg-gray-500 bg-opacity-75 px-1 py-2 sm:p-2 md:p-4 rounded"
             >
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-sm sm:test-base md:text-2xl font-bold text-white">
                 {timeLeft[unit as keyof typeof timeLeft]}
               </h2>
-              <p className="text-sm text-white">
+              <p className="text-xs md:text-sm text-white">
                 {unit.charAt(0).toUpperCase() + unit.slice(1)}
               </p>
             </div>
