@@ -47,7 +47,7 @@ const speakersList = [
   },
   {
     name: "Arush Bartaria",
-    img: "https://media.licdn.com/dms/image/v2/D4D03AQGzAgz9ebKDWg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1667777183997?e=1744848000&v=beta&t=3tkuYb0lKIODYX1eo4Eae5tg8r5g8X_s3NPMG6941d0",
+    img: "/images/speakers/arush-bartaria.jpg",
     linkedin: "https://www.linkedin.com/in/arush-bartaria/",
   },
   {
