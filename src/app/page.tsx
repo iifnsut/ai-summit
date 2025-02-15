@@ -84,7 +84,7 @@ const speakersList = [
 
 const mentionList = [
   {
-    name: "Prof. Anand Shrivastav",
+    name: "Prof. Anand Srivastava",
     img: "https://media.licdn.com/dms/image/v2/C4E03AQFabAfqHWAQkQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1658841704663?e=1744848000&v=beta&t=SE78utfLsmr2qLiD3GbIH3sBft5QDLgb3dw2jWdtIA4",
     linkedin: "https://www.linkedin.com/in/anand-srivastava-a930a262/",
   },

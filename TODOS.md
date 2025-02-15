@@ -13,7 +13,7 @@
 - [x] increase spacing between speaker and events
 - [x] increase spacing between events heading and image
 - [x] Honorable mentions after about section
-  - [x] Prof. Anand Shrivastav
+  - [x] Prof. Anand Srivastava
   - [x] Prof. Prerna Gaur
   - [x] Himanshu Singhal
   - [x] Maya Sherman
