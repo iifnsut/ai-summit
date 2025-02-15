@@ -51,7 +51,7 @@ const SpeakerCard: React.FC<SpeakerCardProps> = ({
           <AvatarImage
             src={img}
             alt={name}
-            className="w-full aspect-square"
+            className="w-full aspect-square object-center object-cover"
           />
           <AvatarFallback className="w-full aspect-square flex items-center justify-center">
             {name}

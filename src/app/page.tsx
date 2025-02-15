@@ -21,6 +21,11 @@ import SpeakerCard from "@/components/includes/SpeakerCard";
 
 const speakersList = [
   {
+    name: "Mrs. Ankita Anand",
+    img: "https://iasdetails.com/wp-content/uploads/2024/11/ANKITA-ANAND.webp",
+    linkedin: "mailto:dcnw@nic.in",
+  },
+  {
     name: "Dr. Rajbir Singh",
     img: "https://media.licdn.com/dms/image/v2/C4D03AQFNoS-zyfAEKg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516249646426?e=1744848000&v=beta&t=uHiv04CynINV6E28PBamgCstb_op0zxVoujH2A3ARxI",
     linkedin: "https://www.linkedin.com/in/rajbirsingh",
@@ -41,6 +46,16 @@ const speakersList = [
     linkedin: "https://www.linkedin.com/in/meemansa-agarwal-a22323242",
   },
   {
+    name: "Arush Bartaria",
+    img: "/images/speakers/arush-bartaria.jpg",
+    linkedin: "https://www.linkedin.com/in/arush-bartaria/",
+  },
+  {
+    name: "Dr. Dipty Tripathi",
+    img: "https://media.licdn.com/dms/image/v2/D4D03AQF1Cs1gCJQ_xA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1712553225114?e=1744848000&v=beta&t=2YltUDYx2pgmPiIcC-vjgt77gc70I_MRgo3B8q06RoI",
+    linkedin: "https://www.linkedin.com/in/dr-dipty-tripathi-22b13670/",
+  },
+  {
     name: "Maya Sherman",
     img: "https://media.licdn.com/dms/image/v2/D5603AQE8swB3MydWEA/profile-displayphoto-shrink_400_400/B56ZR0MC3VH0Ak-/0/1737116103964?e=1744848000&v=beta&t=4wqYFtBkxvqwzTtOP1iyQgOMbdo9OpvrtEMdk3dGSCk",
     linkedin: "https://www.linkedin.com/in/maya-sherman-02b474115",
@@ -59,6 +74,11 @@ const speakersList = [
     name: "Dr. Ankur Gupta",
     img: "https://media.licdn.com/dms/image/v2/C4D03AQGtczScb_6ZCg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516862967008?e=1744848000&v=beta&t=rOq6WToafHeEPxhbbzlwmdGi-oLoR9EjYPfZ2YYuGHw",
     linkedin: "https://www.linkedin.com/in/ankursynon",
+  },
+  {
+    name: "Dr. Alok Nikhil Jha",
+    img: "https://media.licdn.com/dms/image/v2/D4D03AQH98CY9NbsMwA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674362925393?e=1744848000&v=beta&t=q-5JMLjui0xCnUlD9lGRBn3fWmAJ9Uz2UAlx7zVL-G8",
+    linkedin: "hhttps://www.linkedin.com/in/aloknikhil", 
   },
 ];
 
@@ -228,7 +248,9 @@ export default function Home() {
         id="speakers"
         className="w-full min-h-screen h-auto flex items-center justify-center bg-background flex-col">
         <Heading>SPEAKERS</Heading>
-        <div className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center">
+        <div
+          className="relative mx-6 mb-20 sm:mb-16 md:mb-12 lg:mb-10 sm:mx-8 lg:mx-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 content-center justify-center items-center"
+        >
           {speakersList.map((speaker, index) => (
             <SpeakerCard key={index} name={speaker.name} img={speaker.img} linkedin={speaker.linkedin} index={index} />
           ))}
