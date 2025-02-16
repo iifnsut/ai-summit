@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Logging in to Docker Hub..."
+docker login
 
 # Pull the Docker image from Docker Hub
 docker pull nsutiif/event-website:latest
