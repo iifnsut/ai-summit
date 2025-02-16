@@ -29,4 +29,4 @@ fi
 
 # Start the Docker container
 echo "Starting new container..."
-docker run -d --name event-website  -p 3000:3000 nsutiif/event-website:latest
+docker run -d --name event-website --env-file /home/ubuntu/.env  -p 3000:3000 nsutiif/event-website:latest
