@@ -1,6 +1,15 @@
 #!/bin/bash
 
 
+# Load environment variables from .env file at root
+export $(grep -v '^#' /home/ubuntu/.env | xargs)
+
+echo "Environment variables loaded successfully."
+
+#Docker login
+echo "Logging into Docker Hub..."
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
 # Pull the Docker image from Docker Hub
 docker pull nsutiif/event-website:latest
 
