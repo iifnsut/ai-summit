@@ -178,7 +178,7 @@ export default function Home() {
       Q: "3. When and where is the AI Summit going to be held?",
       A: "It is going to be a month long summit to be held at NSUT from 19th February,2025",
     },
-    { Q: "4.What are the key highlights of the summit?", A: "Expert talks, panel discussions, networking, and an ideathon." },
+    { Q: "4.What are the key highlights of the summit?", A: "Expert talks, panel discussions, networking, and an ideathon" },
   ];
   const updateTabs = (e: IntersectionObserverEntry | null) => {
     setTabs(tabs.map((tab) => ({ ...tab, active: `#${e?.target.id}` === tab.href })));
