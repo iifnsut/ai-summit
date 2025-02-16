@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Logging in to Docker Hub..."
+docker login
 
 # Load environment variables from .env file at root
 export $(grep -v '^#' /home/ubuntu/.env | xargs)
