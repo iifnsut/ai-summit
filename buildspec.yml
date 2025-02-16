@@ -1,0 +1,32 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USERNAME: /nsutiif_ai4humanity/docker_credentials/username
+    DOCKER_PASSWORD: /nsutiif_ai4humanity/docker_credentials/PAT
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  
+  pre_build:
+    commands:
+      - echo "Retrieving environment variables from AWS Systems Manager..."
+      - aws ssm get-parameter --name "/nsutiif_ai4humanity/env_file" --with-decryption --query "Parameter.Value" --output text > .env
+      - echo "Environment variables fetched successfully."
+      
+      - echo "Logging in to Docker Hub..."
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
+  
+  build:
+    commands:
+      - echo "Building Docker Image..."
+      - docker build --build-arg ENV_FILE=.env -t "$DOCKER_USERNAME/event-website:latest" .
+
+  post_build:
+    commands:
+      - echo "Pushing the Docker image to Docker Hub..."
+      - docker push "$DOCKER_USERNAME/event-website:latest"
+      - docker logout
+      - echo "Build completed successfully."
