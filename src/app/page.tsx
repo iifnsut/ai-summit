@@ -214,7 +214,7 @@ export default function Home() {
               className="rounded-full flex-1 w-full"
             /> */}
             <Button asChild variant={"secondary"} className="rounded-full flex-1 w-full">
-              <Link target="_blank" href="https://drive.google.com/file/d/1otv8_LsqEkRmwjfCM_r5ijkYLAChhgkR/view?usp=sharing">
+              <Link target="_blank" href="https://drive.google.com/file/d/1me5VXGfLu3aMwM9peT4yU85hNxKm9UaW/view?usp=drive_link">
                 More Info <ChevronRight />
               </Link>
             </Button>

@@ -1,7 +1,5 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
-
 import { formSchema } from "./formSchem";
 import dbConnect from "@/lib/dbConnect";
 import EventModal from "@/Models/EventModal";

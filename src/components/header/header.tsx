@@ -13,7 +13,6 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { HTMLMotionProps, motion } from "motion/react";
 import RegisterButton from "../buttons/registerButton";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ChevronRight } from "lucide-react";
 
 export type tab = { title: string; href: string; active?: boolean };
@@ -49,9 +48,6 @@ export default function Header(allProps: props) {
         </SignedIn>
       </div> */}
       <div className="flex justify-end items-center w-full md:hidden gap-4">
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
         <Sheet>
           <SheetTrigger asChild className="md:hidden cursor-pointer">
             <Button size={"icon"} variant={"ghost"} asChild>
@@ -62,13 +58,6 @@ export default function Header(allProps: props) {
             <SheetTitle></SheetTitle>
             <div className="flex flex-col items-stretch gap-4 p-4">
               <NavMenu tabs={tabs} className="w-full max-w-full block" />
-              {/* <SignedOut>
-                <SignInButton>
-                  <RegisterButton className="">
-                    Register <ChevronRight />
-                  </RegisterButton>
-                </SignInButton>
-              </SignedOut> */}
             </div>
           </SheetContent>
         </Sheet>

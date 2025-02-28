@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+
+const tncSchema = z.object({
+  tnc : z.boolean().default(false).refine(value => value === true, { message: "Please agree to the terms and conditions" }),
+});
+
 const from1Schema = z.object({
   teamName: z.string().min(3, "Team name should be atleast 3 characters long"),
   teamLeaderName: z.string().min(3, "Team leader name required"),
@@ -86,7 +91,7 @@ const fromSchema = z.object({
 });
 
 
-export { from1Schema, from2Schema, from3Schema };
+export { from1Schema, from2Schema, from3Schema , tncSchema};
 
 
 export default fromSchema;

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,21 +17,143 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SignInButton } from "@clerk/nextjs";
-import { ChevronRight } from "lucide-react";
-import { useForm } from "react-hook-form";
-import RegisterButton from "../buttons/registerButton";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useMemo, useCallback } from "react";
 import { Frown } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ScrollArea } from "../ui/scroll-area";
+import { tncSchema } from "./formSchemas";
 
 const problemStatements = [
-  { id: "1", name: "Problem Statement 1" },
-  { id: "2", name: "Problem Statement 2" },
-  { id: "3", name: "Problem Statement 3" },
-  { id: "4", name: "Problem Statement 4" },
+  { id: "AI in Agriculture", name: "AI in Agriculture" },
+  { id: "AI in Hospitals", name: "AI in Hospitals" },
+  { id: "AI in Education", name: "AI in Education" },
+  { id: "AI in Pollution Control", name: "AI in Pollution Control" },
 ];
+
+function RulesAndConsent({ form }: { form: ReturnType<typeof useForm<{ tnc: boolean }>> }) {
+  return (
+    <ScrollArea className="h-full max-h-[60vh]">
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-4">
+          Rules & Regulations – Delhi AI4Humanity Summit 2025
+        </h2>
+        <div className="mb-4">
+          <h3 className="font-semibold">1. General Guidelines</h3>
+          <ul className="list-disc list-inside">
+            <li>Open to students, entrepreneurs, and AI enthusiasts.</li>
+            <li>Ethical AI practices must be followed.</li>
+            <li>Plagiarism will lead to disqualification.</li>
+          </ul>
+        </div>
+        <div className="mb-4">
+          <h3 className="font-semibold">2. Hackathon Rules</h3>
+          <p className="text-xs sm:text-base">Team Formation:</p>
+          <ul className="list-disc list-inside ml-4">
+            <li>3 to 5 members per team</li>
+            <li>No team changes after registration.</li>
+            <li>One team per participant.</li>
+          </ul>
+          <p className="text-xs sm:text-base">Rounds:</p>
+          <ul className="list-disc list-inside ml-4">
+            <li>
+              Preliminary: Register via AI4Humanity Summit website or Unstop.
+              Submit a slide deck or prototype video.
+            </li>
+            <li>
+              Finals: Present solution, revenue model & AI demo to the jury.
+            </li>
+          </ul>
+          <p className="text-xs sm:text-base">
+            Evaluation: Innovation, feasibility, impact & technical excellence.
+          </p>
+        </div>
+        <div className="mb-4">
+          <h3 className="font-semibold">3. Event Conduct</h3>
+          <ul className="list-disc list-inside">
+            <li>Carry valid ID for verification.</li>
+            <li>No plagiarism or unethical AI use.</li>
+            <li>Maintain professionalism and respect for all participants.</li>
+            <li>Ensure no copyrighted content is used.</li>
+          </ul>
+        </div>
+        <div className="mb-4">
+          <h3 className="font-semibold">5. Problem Statements</h3>
+          <ul className="list-disc list-inside">
+            <li>AI in Agriculture</li>
+            <li>AI in Hospitals</li>
+            <li>AI in Education</li>
+            <li>AI in Pollution Control</li>
+          </ul>
+          <p className="text-xs sm:text-base">
+            Detailed Problem Statement:{" "}
+            <a
+              href="https://drive.google.com/file/d/14etCBdFEciwLk2m6KUXRqum8txgaOa06/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
+              this link
+            </a>
+          </p>
+        </div>
+        <div className="mb-4">
+          <h3 className="font-semibold">6. Prizes & Recognition</h3>
+          <ul className="list-disc list-inside">
+            <li>
+              Winners will receive certificates, prizes, mentorship, and an
+              opportunity to incubate at NSUT IIF.
+            </li>
+            <li>All participants will receive participation certificates.</li>
+          </ul>
+        </div>
+        <div className="mb-4">
+          <h3 className="font-semibold">7. Contact</h3>
+          <p className="text-xs sm:text-base">
+            For queries, email{" "}
+            <a
+              href="mailto:connect.nsutiif@nsut.ac.in"
+              className="text-blue-500 underline"
+            >
+              connect.nsutiif@nsut.ac.in
+            </a>
+          </p>
+        </div>
+        <FormField
+          control={form.control}
+          name="tnc"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center">
+                <FormControl>
+                  <Checkbox
+                    {...form.register("tnc")}
+                    className="me-2"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription>
+                  I have read and agree to the rules and regulations
+                </FormDescription>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-500 text-white mt-2"
+        >
+          Next Step
+        </Button>
+      </div>
+    </ScrollArea>
+  );
+}
 
 function Step1({ form }: { form: ReturnType<typeof useForm> }) {
   return (
@@ -230,6 +353,18 @@ function Step3({ form }: { form: ReturnType<typeof useForm> }) {
                 </SelectContent>
               </Select>
             </FormControl>
+            <FormDescription className="text-sm">
+              For more details on the problem statement, please visit{" "}
+              <Link
+                href="https://drive.google.com/file/d/14etCBdFEciwLk2m6KUXRqum8txgaOa06/view"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                this link
+              </Link>
+              .
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
@@ -243,6 +378,7 @@ function Step3({ form }: { form: ReturnType<typeof useForm> }) {
             <FormControl>
               <Textarea {...field} className="h-32 resize-none" />
             </FormControl>
+
             <FormMessage />
           </FormItem>
         )}
@@ -340,26 +476,26 @@ function RegisterMessage() {
   );
 }
 
-function LoginMessage() {
-  return (
-    <div
-      className={
-        "flex items-center justify-center m-4 md:mt-8 lg:p-8  p-4 md:p-6 bg-opacity-10 rounded-lg"
-      }
-    >
-      <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold text-center mb-4">
-          Please login to register!
-        </h1>
-        <SignInButton>
-          <RegisterButton className="rounded-full flex-1 w-full">
-            Register <ChevronRight />
-          </RegisterButton>
-        </SignInButton>
-      </div>
-    </div>
-  );
-}
+// function LoginMessage() {
+//   return (
+//     <div
+//       className={
+//         "flex items-center justify-center m-4 md:mt-8 lg:p-8  p-4 md:p-6 bg-opacity-10 rounded-lg"
+//       }
+//     >
+//       <div className="flex flex-col gap-4">
+//         <h1 className="text-4xl font-bold text-center mb-4">
+//           Please login to register!
+//         </h1>
+//         <SignInButton>
+//           <RegisterButton className="rounded-full flex-1 w-full">
+//             Register <ChevronRight />
+//           </RegisterButton>
+//         </SignInButton>
+//       </div>
+//     </div>
+//   );
+// }
 
 function Loading() {
   return (
@@ -464,14 +600,15 @@ function RegistrationClosed() {
 }
 
 export {
+  CountDown,
   Loading,
-  LoginMessage,
+  // LoginMessage,
+  RulesAndConsent,
   problemStatements,
   RegisterMessage,
+  RegistrationClosed,
   Step1,
   Step2,
   Step3,
   Step4,
-  CountDown,
-  RegistrationClosed,
 };

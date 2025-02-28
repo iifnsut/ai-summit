@@ -18,9 +18,21 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ArrowBigLeft, ArrowBigRight, ChevronRight } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
-import { RegisterMessage, Step1, Step2, Step3, Step4 } from "./Steps";
+import {
+  RegisterMessage,
+  RulesAndConsent,
+  Step1,
+  Step2,
+  Step3,
+  Step4,
+} from "./Steps";
 import { saveCombinedData } from "./action";
-import { from1Schema, from2Schema, from3Schema } from "./formSchemas";
+import {
+  from1Schema,
+  from2Schema,
+  from3Schema,
+  tncSchema,
+} from "./formSchemas";
 import { RegistrationClosed, CountDown } from "./Steps";
 import { HACKATHON_START_DATE, HACKATHON_END_DATE } from "@/lib/constants";
 
@@ -41,7 +53,7 @@ export default function HackathonModal() {
       ? 0
       : new Date() > HACKATHON_END_DATE
       ? 3
-      : 1
+      : 4
   );
   const [combinedData, setCombinedData] = useState<any>({});
 
@@ -53,6 +65,11 @@ export default function HackathonModal() {
   });
   const form3 = useForm({
     resolver: zodResolver(from3Schema),
+  });
+
+  const tncForm = useForm({
+    resolver: zodResolver(tncSchema),
+    defaultValues: { tnc: false },
   });
 
   const form = useMemo(() => {
@@ -93,7 +110,6 @@ export default function HackathonModal() {
         ...prev,
         ...data,
       }));
-
     } catch (error) {
       console.error(error);
       setCurrentStep(currentStep - 1);
@@ -155,16 +171,33 @@ export default function HackathonModal() {
     }
   }, [currentStep, form1, form2, form3, membersCount, markSubmission, pending]);
 
+  const handelTncSubmit = useCallback(
+    async (data: any) => {
+      const { tnc } = data;
+      if (tnc) {
+        setPrimaryCount(1);
+      } else {
+        toast({
+          title: "Oops!",
+          description: "Please agree to the terms and conditions",
+          variant: "destructive",
+        });
+      }
+    },
+    [toast]
+  );
+
   const modalClose = useCallback(() => {
     if (primaryCount === 2) {
-      setPrimaryCount(1);
+      setPrimaryCount(4);
       form1.reset();
       form2.reset();
       form3.reset();
+      tncForm.reset();
       setCurrentStep(0);
       setCompleteStep(0);
     }
-  }, [primaryCount, form1, form2, form3]);
+  }, [primaryCount, form1, form2, form3, tncForm]);
 
   return (
     <Dialog modal={false} onOpenChange={modalClose}>
@@ -239,6 +272,12 @@ export default function HackathonModal() {
           <RegisterMessage />
         ) : primaryCount === 3 ? (
           <RegistrationClosed />
+        ) : primaryCount === 4 ? (
+          <Form {...tncForm}>
+            <form onSubmit={tncForm.handleSubmit(handelTncSubmit)}>
+              <RulesAndConsent form={tncForm} />
+            </form>
+          </Form>
         ) : null}
       </DialogContent>
     </Dialog>
