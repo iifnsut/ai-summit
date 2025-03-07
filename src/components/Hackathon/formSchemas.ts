@@ -20,7 +20,7 @@ const from1Schema = z.object({
   collegeName: z.string().nonempty(),
   membersCount: z.preprocess(
     (val) => Number(val) || 3,
-    z.number().min(3).max(4)
+    z.number().min(2).max(4)
   ),
 });
 
@@ -36,7 +36,7 @@ const from2Schema = z.object({
         email: z.string().nonempty(),
       })
     )
-    .min(3, "Minimum 3 team members required")
+    .min(2, "Minimum 2 team members required")
     .max(4, "Maximum 4 team members allowed"),
 });
 

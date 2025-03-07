@@ -34,7 +34,11 @@ const problemStatements = [
   { id: "AI in Pollution Control", name: "AI in Pollution Control" },
 ];
 
-function RulesAndConsent({ form }: { form: ReturnType<typeof useForm<{ tnc: boolean }>> }) {
+function RulesAndConsent({
+  form,
+}: {
+  form: ReturnType<typeof useForm<{ tnc: boolean }>>;
+}) {
   return (
     <ScrollArea className="h-full max-h-[60vh]">
       <div className="p-4">
@@ -255,11 +259,15 @@ function Step1({ form }: { form: ReturnType<typeof useForm> }) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value={"2"}>2</SelectItem>
                   <SelectItem value={"3"}>3</SelectItem>
                   <SelectItem value={"4"}>4</SelectItem>
                 </SelectContent>
               </Select>
             </FormControl>
+            <FormDescription className="text-sm">
+              Select the additional members count for your team, excluding the team leader.
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
@@ -276,11 +284,12 @@ function Step2({
   membersCount: number;
 }) {
   return (
+    <>
     <div className="grid gap-4 py-4 mx-auto w-11/12">
       {Array.from({ length: membersCount }).map((_, index) => (
         <div
-          key={index}
-          className="grid grid-cols-1 sm:grid-cols-3 items-center gap-4"
+        key={index}
+        className="grid grid-cols-1 sm:grid-cols-3 items-center gap-4"
         >
           <FormField
             name={`teamMembers.${index}.name`}
@@ -295,7 +304,7 @@ function Step2({
                 <FormMessage />
               </FormItem>
             )}
-          />
+            />
           <FormField
             name={`teamMembers.${index}.contact`}
             control={form.control}
@@ -309,7 +318,7 @@ function Step2({
                 <FormMessage />
               </FormItem>
             )}
-          />
+            />
           <FormField
             name={`teamMembers.${index}.email`}
             control={form.control}
@@ -323,10 +332,19 @@ function Step2({
                 <FormMessage />
               </FormItem>
             )}
-          />
+            />
         </div>
       ))}
     </div>
+    <div className="text-sm ms-2 text-center">
+      <p className="text-gray-500">
+        Please ensure that the details of all the team members are correct.
+      </p>
+      <p className="text-gray-500">
+      Enter the details of all the team members excluding the team leader.
+      </p>
+    </div>
+</>
   );
 }
 
