@@ -128,7 +128,7 @@ export default function Home() {
     },
     {
       icon: Dot,
-      date: "19th FEB - 6th MARCH 2025",
+      date: "19th FEB - 14th MARCH 2025",
       desc: "Preliminary round of Innovate4Humanity: Participants must submit team details along with their ideation or prototype.",
     },
     {
